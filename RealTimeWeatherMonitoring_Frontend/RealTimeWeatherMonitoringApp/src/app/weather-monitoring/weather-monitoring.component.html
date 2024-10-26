@@ -1,0 +1,44 @@
+<div class="weather-container">
+    <h2>Weather Summary for {{ selectedCity }}</h2>
+    
+    <div>
+      <label>Select City: </label>
+      <select [(ngModel)]="selectedCity" (change)="changeCity(selectedCity)">
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+    </div>
+    
+    <div *ngIf="loading">Loading...</div>
+    
+    <table *ngIf="!loading && dailySummary">
+      <thead>
+        <tr>
+          <th>City</th>
+          <th>Date</th>
+          <th>Average Temp</th>
+          <th>Max Temp</th>
+          <th>Min Temp</th>
+          <th>Dominant Condition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ dailySummary.city }}</td>
+          <td>{{ dailySummary.date | date }}</td>
+          <td>{{ dailySummary.avgTemp }}°C</td>
+          <td>{{ dailySummary.maxTemp }}°C</td>
+          <td>{{ dailySummary.minTemp }}°C</td>
+          <td>{{ dailySummary.dominantCondition }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+  
+    <div *ngIf="!loading && !dailySummary">No data available.</div>
+    <!-- Add this to `weather.component.html` for a simple alert section -->
+<div *ngIf="dailySummary && dailySummary.avgTemp > 35" class="alert">
+    <p>Alert! High temperature detected: {{ dailySummary.avgTemp }}°C in {{ selectedCity }}</p>
+  </div>
+  
+  </div>
+  
